@@ -5,7 +5,7 @@
            xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
            xsi:type="MailApp">
   <Id>F5A7C0E2-4E2E-4B8D-9F3B-7A3B6B2C9B11</Id>
-  <Version>1.0.0.15</Version>
+  <Version>1.0.0.16</Version>
 
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
@@ -24,15 +24,20 @@
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <!-- Sadece ekleri okuyacağız, minimum izin yeterli -->
+  <!-- Validator için UI kaynağı -->
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+  </DefaultSettings>
+
+  <!-- Minimum izin -->
   <Permissions>ReadItem</Permissions>
 
-  <Requirements>
-    <Sets>
-      <Set Name="Mailbox" MinVersion="1.10"/>
-    </Sets>
-  </Requirements>
+  <!-- Basit bir görünürlük kuralı -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="ReadOrCompose"/>
+  </Rule>
 
+  <!-- Event-based aktivasyon -->
   <ov:VersionOverrides xsi:type="ov:VersionOverridesV1_1" Version="1.0">
     <ov:Requirements>
       <bt:Sets DefaultMinVersion="1.10">
@@ -49,7 +54,7 @@
         <ov:Runtimes>
           <ov:Runtime resid="EventRuntime.Url" Lifetime="short"/>
         </ov:Runtimes>
-                 
+
         <ov:LaunchEvents>
           <ov:LaunchEvent Type="OnMessageSend"
                           FunctionName="onMessageSendHandler"
