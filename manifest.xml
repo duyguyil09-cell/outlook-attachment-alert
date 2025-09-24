@@ -4,8 +4,9 @@
            xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
            xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
            xsi:type="MailApp">
-  <Id>F5A7C0E2-4E2E-4B8D-9F3B-7A3B6B2C9B11</Id>
-  <Version>1.0.0.22</Version>
+  <!-- Yeni GUID -->
+  <Id>8F0C8D9F-7F0B-4B6A-9C8B-9F1F9D9E7C21</Id>
+  <Version>1.0.0.23</Version>
 
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
@@ -24,15 +25,16 @@
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <!-- Admin Center bunu arıyor -->
+  <!-- Admin Center kaynağı görmek istiyor -->
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=22"/>
+    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=23"/>
   </DefaultSettings>
 
-  <Permissions>ReadWriteItem</Permissions>
+  <Permissions>ReadItem</Permissions>
 
   <Requirements>
     <Sets>
+      <!-- OnMessageSend için 1.10 yeterli; istersen 1.12 de olur -->
       <Set Name="Mailbox" MinVersion="1.10"/>
     </Sets>
   </Requirements>
@@ -47,13 +49,16 @@
     <ov:Hosts>
       <ov:Host xsi:type="ov:MailHost">
         <ov:DesktopFormFactor>
+          <!-- FunctionFile referansı -->
           <ov:FunctionFile resid="FF.Url"/>
         </ov:DesktopFormFactor>
 
+        <!-- Event runtime -->
         <ov:Runtimes>
           <ov:Runtime resid="EventRuntime.Url" Lifetime="short"/>
         </ov:Runtimes>
 
+        <!-- OnSend -->
         <ov:LaunchEvents>
           <ov:LaunchEvent Type="OnMessageSend"
                           FunctionName="onMessageSendHandler"
@@ -64,8 +69,8 @@
 
     <ov:Resources>
       <bt:Urls>
-        <bt:Url id="FF.Url"           DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=22"/>
-        <bt:Url id="EventRuntime.Url" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/event.js?v=22"/>
+        <bt:Url id="FF.Url"           DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=23"/>
+        <bt:Url id="EventRuntime.Url" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/event.js?v=23"/>
       </bt:Urls>
     </ov:Resources>
   </ov:VersionOverrides>
