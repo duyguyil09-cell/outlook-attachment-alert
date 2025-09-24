@@ -5,7 +5,7 @@
            xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
            xsi:type="MailApp">
   <Id>F5A7C0E2-4E2E-4B8D-9F3B-7A3B6B2C9B11</Id>
-  <Version>1.0.0.14</Version>
+  <Version>1.0.0.15</Version>
 
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
@@ -24,7 +24,8 @@
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <Permissions>ReadWriteItem</Permissions>
+  <!-- Sadece ekleri okuyacağız, minimum izin yeterli -->
+  <Permissions>ReadItem</Permissions>
 
   <Requirements>
     <Sets>
