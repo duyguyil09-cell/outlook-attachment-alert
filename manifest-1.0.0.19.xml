@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+           xsi:type="MailApp">
+  <Id>F5A7C0E2-4E2E-4B8D-9F3B-7A3B6B2C9B11</Id>
+  <Version>1.0.0.19</Version>
+
+  <ProviderName>Trendyol</ProviderName>
+  <DefaultLocale>tr-TR</DefaultLocale>
+  <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
+  <Description DefaultValue="Ekte dosya varsa gönderirken uyarı gösterir."/>
+
+  <IconUrl               DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+  <SupportUrl            DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
+
+  <AppDomains>
+    <AppDomain>duyguyil09-cell.github.io</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <!-- UI başlangıç sayfası -->
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+  </DefaultSettings>
+
+  <!-- Compose ekranında etkin olsun -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="ReadOrCompose"/>
+  </Rule>
+
+  <!-- OnMessageSend için güvenli tercih -->
+  <Permissions>ReadWriteItem</Permissions>
+
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.10"/>
+    </Sets>
+  </Requirements>
+
+  <ov:VersionOverrides xsi:type="ov:VersionOverridesV1_1" Version="1.0">
+    <ov:Requirements>
+      <bt:Sets DefaultMinVersion="1.10">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </ov:Requirements>
+
+    <ov:Hosts>
+      <ov:Host xsi:type="ov:MailHost">
+        <ov:DesktopFormFactor>
+          <ov:FunctionFile resid="FF.Url"/>
+          <ov:ExtensionPoints>
+            <ov:MessageComposeCommandSurface>
+              <ov:OfficeTab id="TabDefault">
+                <ov:Group id="grpCompose">
+                  <ov:Label resid="groupLabel"/>
+                  <ov:Control xsi:type="ov:Button" id="btnOpenPane">
+                    <ov:Label resid="paneButtonLabel"/>
+                    <ov:Supertip>
+                      <ov:Title resid="paneSuperTipTitle"/>
+                      <ov:Description resid="paneSuperTipDescription"/>
+                    </ov:Supertip>
+                    <ov:Icon>
+                      <bt:Image resid="icon16" size="16"/>
+                      <bt:Image resid="icon32" size="32"/>
+                      <bt:Image resid="icon80" size="80"/>
+                    </ov:Icon>
+                    <ov:Action xsi:type="ov:ShowTaskpane">
+                      <ov:TaskpaneId>TaskpaneId1</ov:TaskpaneId>
+                      <ov:SourceLocation resid="Taskpane.Url"/>
+                    </ov:Action>
+                  </ov:Control>
+                </ov:Group>
+              </ov:OfficeTab>
+            </ov:MessageComposeCommandSurface>
+          </ov:ExtensionPoints>
+        </ov:DesktopFormFactor>
+
+        <ov:Runtimes>
+          <ov:Runtime resid="EventRuntime.Url" Lifetime="short"/>
+        </ov:Runtimes>
+        <ov:LaunchEvents>
+          <ov:LaunchEvent Type="OnMessageSend"
+                          FunctionName="onMessageSendHandler"
+                          SendMode="PromptUser"/>
+        </ov:LaunchEvents>
+      </ov:Host>
+    </ov:Hosts>
+
+    <ov:Resources>
+      <bt:Images>
+        <bt:Image id="icon16" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+        <bt:Image id="icon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+        <bt:Image id="icon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="FF.Url"           DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
+        <bt:Url id="Taskpane.Url"     DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+        <bt:Url id="EventRuntime.Url" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/event.js"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="groupLabel"             DefaultValue="Ek Uyarısı"/>
+        <bt:String id="paneButtonLabel"        DefaultValue="Aç"/>
+        <bt:String id="paneSuperTipTitle"      DefaultValue="Ek Uyarısı"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="paneSuperTipDescription" DefaultValue="Bu eklenti, gönderirken ekte dosya varsa uyarır."/>
+      </bt:LongStrings>
+    </ov:Resources>
+  </ov:VersionOverrides>
+</OfficeApp>
