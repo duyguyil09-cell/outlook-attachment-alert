@@ -49,7 +49,7 @@
         <ov:Runtimes>
           <ov:Runtime resid="EventRuntime.Url" Lifetime="short"/>
         </ov:Runtimes>
-
+                 
         <ov:LaunchEvents>
           <ov:LaunchEvent Type="OnMessageSend"
                           FunctionName="onMessageSendHandler"
