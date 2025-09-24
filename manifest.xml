@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+  xsi:type="MailApp">
+
+  <Id>F5A7C0E2-4E2E-4B8D-9F3B-7A3B6B2C9B11</Id>
+  <Version>1.0.0.13</Version>
+
+  <ProviderName>Trendyol</ProviderName>
+  <DefaultLocale>tr-TR</DefaultLocale>
+  <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
+  <Description DefaultValue="Ekte dosya varsa gönderirken uyarı gösterir."/>
+
+  <IconUrl               DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+  <SupportUrl            DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
+
+  <AppDomains>
+    <AppDomain>duyguyil09-cell.github.io</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <Permissions>ReadWriteItem</Permissions>
+
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.10"/>
+    </Sets>
+  </Requirements>
+
+  <ov:VersionOverrides xsi:type="ov:VersionOverridesV1_1" Version="1.0">
+    <ov:Requirements>
+      <bt:Sets DefaultMinVersion="1.10">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </ov:Requirements>
+
+    <ov:Hosts>
+      <ov:Host xsi:type="ov:MailHost">
+        <ov:DesktopFormFactor>
+          <ov:FunctionFile resid="FF.Url"/>
+        </ov:DesktopFormFactor>
+
+        <ov:Runtimes>
+          <ov:
