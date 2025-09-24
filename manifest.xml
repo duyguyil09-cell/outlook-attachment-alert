@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OfficeApp
-  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
-  xsi:type="MailApp">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+           xsi:type="MailApp">
   <Id>F5A7C0E2-4E2E-4B8D-9F3B-7A3B6B2C9B11</Id>
-  <Version>1.0.0.13</Version>
+  <Version>1.0.0.14</Version>
 
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
@@ -48,4 +46,22 @@
         </ov:DesktopFormFactor>
 
         <ov:Runtimes>
-          <ov:
+          <ov:Runtime resid="EventRuntime.Url" Lifetime="short"/>
+        </ov:Runtimes>
+
+        <ov:LaunchEvents>
+          <ov:LaunchEvent Type="OnMessageSend"
+                          FunctionName="onMessageSendHandler"
+                          SendMode="PromptUser"/>
+        </ov:LaunchEvents>
+      </ov:Host>
+    </ov:Hosts>
+
+    <ov:Resources>
+      <bt:Urls>
+        <bt:Url id="FF.Url"           DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
+        <bt:Url id="EventRuntime.Url" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/event.js"/>
+      </bt:Urls>
+    </ov:Resources>
+  </ov:VersionOverrides>
+</OfficeApp>
