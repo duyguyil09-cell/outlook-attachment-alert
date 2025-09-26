@@ -50,13 +50,12 @@
   <!-- 5) İsteğe bağlı -->
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
-  <!-- 6) ON SEND — DİKKAT: /1.1 YOK, xsi:type YOK -->
-    <!-- 6) ON SEND — /1.1 YOK, xsi:type YOK, Version attribute YOK -->
+    <!-- 6) ON SEND — /1.1 YOK, xsi:type YOK, bt:Sets/bt:Set KULLAN -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides">
     <Requirements>
-      <Sets DefaultMinVersion="1.8">
-        <Set Name="Mailbox"/>
-      </Sets>
+      <bt:Sets DefaultMinVersion="1.8">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
     </Requirements>
 
     <Hosts>
@@ -82,5 +81,6 @@
 
     <VersionOverrides/>
   </VersionOverrides>
+
 
 </OfficeApp>
