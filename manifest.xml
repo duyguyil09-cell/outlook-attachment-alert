@@ -50,7 +50,7 @@
   <!-- 5) İsteğe bağlı -->
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
-    <!-- 6) ON SEND — /1.1 YOK, xsi:type YOK, bt:Sets/bt:Set KULLAN -->
+    <!-- 6) ON SEND — or: prefix, Host concrete type, bt:Sets -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides">
     <Requirements>
       <bt:Sets DefaultMinVersion="1.8">
@@ -58,19 +58,20 @@
       </bt:Sets>
     </Requirements>
 
-    <Hosts>
-      <Host Name="Mailbox">
-        <Runtimes>
-          <Runtime resid="residRuntime" Lifetime="long"/>
-        </Runtimes>
+    <Hosts xmlns:or="http://schemas.microsoft.com/office/mailappversionoverrides">
+      <!-- DİKKAT: abstract olmadığı için SOMUT TÜR -->
+      <or:Host xsi:type="MailHost" Name="Mailbox">
+        <or:Runtimes>
+          <or:Runtime resid="residRuntime" Lifetime="long"/>
+        </or:Runtimes>
 
-        <ExtensionPoint xsi:type="LaunchEvent">
-          <LaunchEvents>
-            <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
-          </LaunchEvents>
-          <SourceLocation resid="residRuntime"/>
-        </ExtensionPoint>
-      </Host>
+        <or:ExtensionPoint xsi:type="LaunchEvent">
+          <or:LaunchEvents>
+            <or:LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
+          </or:LaunchEvents>
+          <or:SourceLocation resid="residRuntime"/>
+        </or:ExtensionPoint>
+      </or:Host>
     </Hosts>
 
     <Resources>
