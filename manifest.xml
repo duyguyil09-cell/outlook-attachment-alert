@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
            xsi:type="MailApp">
   <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>1.0.0.35</Version>
+  <Version>1.0.1.0</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
-  <DisplayName DefaultValue="Test (çok basit)"/>
-  <Description DefaultValue="Sadece yükleme doğrulaması için basit görev bölmesi."/>
+  <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
+  <Description DefaultValue="Gönder tuşunda ek varsa kullanıcıyı uyarır."/>
 
-  <!-- İKONLAR: Gerçekten 32x32 ve 80x80 PNG olsun -->
+  <!-- İkonlar: boyutları tam 32x32 ve 80x80 olsun -->
   <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
 
@@ -23,22 +25,75 @@
     <Host Name="Mailbox"/>
   </Hosts>
 
+  <!-- Temel gereksinim ve izin -->
   <Requirements>
     <Sets>
       <Set Name="Mailbox" MinVersion="1.1"/>
     </Sets>
   </Requirements>
+  <Permissions>ReadWriteItem</Permissions>
 
-  <Permissions>ReadItem</Permissions>
-
-  <!-- Basit kurala bağlı görünüm -->
+  <!-- (Pane görünümü zorunlu değil ama bırakabiliriz)
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
-
   <DefaultSettings>
-    <!-- ZORUNLU: 32–450 arasında bir değer -->
     <RequestedHeight>250</RequestedHeight>
     <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
   </DefaultSettings>
+  -->
+
+  <!-- === OnSend için VersionOverrides 1.1 === -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
+    <!-- OnSend, Mailbox 1.8+ ister -->
+    <Requirements>
+      <Sets DefaultMinVersion="1.8">
+        <Set Name="Mailbox"/>
+      </Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host Name="Mailbox">
+        <Runtimes>
+          <!-- function file: office.js + event.js yüklenir -->
+          <Runtime resid="residRuntime" Lifetime="long" />
+        </Runtimes>
+
+        <ExtensionPoint xsi:type="LaunchEvent">
+          <!-- E-posta gönderilirken tetiklenecek -->
+          <LaunchEvents>
+            <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" />
+          </LaunchEvents>
+          <SourceLocation resid="residFunctionFileUrl"/>
+          <!-- İsteğe bağlı durumlar -->
+          <Rule xsi:type="RuleCollection" Mode="Or">
+            <!-- Tüm iletilerde çalışsın -->
+            <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+            <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+          </Rule>
+        </ExtensionPoint>
+      </Host>
+    </Hosts>
+
+    <!-- Kaynaklar -->
+    <Resources>
+      <bt:Images>
+        <bt:Image id="residIcon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+        <bt:Image id="residIcon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <!-- Function file: içinde office.js ve event.js’i yüklüyorsun -->
+        <bt:Url id="residFunctionFileUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
+        <bt:Url id="residSupportUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="residDisplayName" DefaultValue="Ek Uyarısı"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="residDescription" DefaultValue="Gönderirken ekte dosya varsa uyarır."/>
+      </bt:LongStrings>
+    </Resources>
+
+    <VersionOverrides/>
+  </VersionOverrides>
 </OfficeApp>
