@@ -3,11 +3,11 @@
   xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+  xmlns:or="http://schemas.microsoft.com/office/mailappversionoverrides"
   xsi:type="MailApp">
 
   <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>2.0.0.1</Version>
+  <Version>2.0.0.2</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
   <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
@@ -48,37 +48,37 @@
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
 
-  <!-- 5) Şema tatmini için (opsiyonel) -->
+  <!-- 5) Şema tatmini için -->
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
-  <!-- === ON SEND (VersionOverrides 1.1) === -->
-  <ov:VersionOverrides Version="1.0.0">
-    <ov:Requirements>
-      <ov:Sets DefaultMinVersion="1.8">
-        <ov:Set Name="Mailbox"/>
-      </ov:Sets>
-    </ov:Requirements>
+  <!-- === ON SEND (VersionOverrides V1_1) === -->
+  <or:VersionOverrides xsi:type="VersionOverridesV1_1" Version="1.0.0">
+    <or:Requirements>
+      <or:Sets DefaultMinVersion="1.8">
+        <or:Set Name="Mailbox"/>
+      </or:Sets>
+    </or:Requirements>
 
-    <ov:Hosts>
-      <ov:Host Name="Mailbox">
-        <ov:Runtimes>
-          <ov:Runtime resid="residRuntime" Lifetime="long"/>
-        </ov:Runtimes>
+    <or:Hosts>
+      <or:Host Name="Mailbox">
+        <or:Runtimes>
+          <or:Runtime resid="residRuntime" Lifetime="long"/>
+        </or:Runtimes>
 
-        <ov:ExtensionPoint xsi:type="LaunchEvent">
-          <ov:LaunchEvents>
-            <ov:LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
-          </ov:LaunchEvents>
-          <ov:SourceLocation resid="residRuntime"/>
-          <ov:Rule xsi:type="RuleCollection" Mode="Or">
+        <or:ExtensionPoint xsi:type="LaunchEvent">
+          <or:LaunchEvents>
+            <or:LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
+          </or:LaunchEvents>
+          <or:SourceLocation resid="residRuntime"/>
+          <or:Rule xsi:type="RuleCollection" Mode="Or">
             <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
             <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
-          </ov:Rule>
-        </ov:ExtensionPoint>
-      </ov:Host>
-    </ov:Hosts>
+          </or:Rule>
+        </or:ExtensionPoint>
+      </or:Host>
+    </or:Hosts>
 
-    <ov:Resources>
+    <or:Resources>
       <bt:Images>
         <bt:Image id="residIcon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
       </bt:Images>
@@ -91,8 +91,8 @@
       <bt:LongStrings>
         <bt:String id="residDesc" DefaultValue="Gönderirken ekte dosya varsa uyarır."/>
       </bt:LongStrings>
-    </ov:Resources>
+    </or:Resources>
 
-    <ov:VersionOverrides/>
-  </ov:VersionOverrides>
+    <or:VersionOverrides/>
+  </or:VersionOverrides>
 </OfficeApp>
