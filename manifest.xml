@@ -51,7 +51,8 @@
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
   <!-- 6) ON SEND — DİKKAT: /1.1 YOK, xsi:type YOK -->
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" Version="1.0.0">
+    <!-- 6) ON SEND — /1.1 YOK, xsi:type YOK, Version attribute YOK -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides">
     <Requirements>
       <Sets DefaultMinVersion="1.8">
         <Set Name="Mailbox"/>
@@ -69,7 +70,6 @@
             <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
           </LaunchEvents>
           <SourceLocation resid="residRuntime"/>
-          <!-- İstersen kapsam daraltmak için Rule koyabilirsin -->
         </ExtensionPoint>
       </Host>
     </Hosts>
@@ -82,4 +82,5 @@
 
     <VersionOverrides/>
   </VersionOverrides>
+
 </OfficeApp>
