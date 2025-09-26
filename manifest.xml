@@ -50,7 +50,7 @@
   <!-- 5) İsteğe bağlı -->
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
-    <!-- 6) ON SEND — or: prefix, Host concrete type, bt:Sets -->
+    <!-- 6) ON SEND — or: prefix, Host concrete type (NO Name attr), bt:Sets -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides">
     <Requirements>
       <bt:Sets DefaultMinVersion="1.8">
@@ -59,8 +59,8 @@
     </Requirements>
 
     <Hosts xmlns:or="http://schemas.microsoft.com/office/mailappversionoverrides">
-      <!-- DİKKAT: abstract olmadığı için SOMUT TÜR -->
-      <or:Host xsi:type="MailHost" Name="Mailbox">
+      <!-- DİKKAT: Artık Name yok; somut tür: MailHost -->
+      <or:Host xsi:type="MailHost">
         <or:Runtimes>
           <or:Runtime resid="residRuntime" Lifetime="long"/>
         </or:Runtimes>
@@ -82,6 +82,7 @@
 
     <VersionOverrides/>
   </VersionOverrides>
+
 
 
 </OfficeApp>
