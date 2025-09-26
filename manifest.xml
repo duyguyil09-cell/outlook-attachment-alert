@@ -6,16 +6,16 @@
            xsi:type="MailApp">
   <!-- Yeni GUID -->
   <Id>8F0C8D9F-7F0B-4B6A-9C8B-9F1F9D9E7C21</Id>
-  <Version>1.0.0.23</Version>
+  <Version>1.0.0.24</Version>
 
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
   <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
   <Description DefaultValue="Ekte dosya varsa gönderirken uyarı gösterir."/>
 
-  <IconUrl               DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+  <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
-  <SupportUrl            DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
+  <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=24"/>
 
   <AppDomains>
     <AppDomain>duyguyil09-cell.github.io</AppDomain>
@@ -25,16 +25,15 @@
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <!-- Admin Center kaynağı görmek istiyor -->
+  <!-- Admin Center SourceLocation istiyor; 200 için query ekliyoruz -->
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=23"/>
+    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=24"/>
   </DefaultSettings>
 
+  <!-- OnSend için minimum: ReadItem ve Mailbox 1.10 -->
   <Permissions>ReadItem</Permissions>
-
   <Requirements>
     <Sets>
-      <!-- OnMessageSend için 1.10 yeterli; istersen 1.12 de olur -->
       <Set Name="Mailbox" MinVersion="1.10"/>
     </Sets>
   </Requirements>
@@ -48,17 +47,10 @@
 
     <ov:Hosts>
       <ov:Host xsi:type="ov:MailHost">
-        <ov:DesktopFormFactor>
-          <!-- FunctionFile referansı -->
-          <ov:FunctionFile resid="FF.Url"/>
-        </ov:DesktopFormFactor>
-
-        <!-- Event runtime -->
+        <!-- OnSend runtime -->
         <ov:Runtimes>
           <ov:Runtime resid="EventRuntime.Url" Lifetime="short"/>
         </ov:Runtimes>
-
-        <!-- OnSend -->
         <ov:LaunchEvents>
           <ov:LaunchEvent Type="OnMessageSend"
                           FunctionName="onMessageSendHandler"
@@ -69,8 +61,9 @@
 
     <ov:Resources>
       <bt:Urls>
-        <bt:Url id="FF.Url"           DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=23"/>
-        <bt:Url id="EventRuntime.Url" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/event.js?v=23"/>
+        <!-- Bu dosya sırf “var” olsun diye; UI açmıyoruz -->
+        <bt:Url id="FF.Url"           DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=24"/>
+        <bt:Url id="EventRuntime.Url" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/event.js?v=24"/>
       </bt:Urls>
     </ov:Resources>
   </ov:VersionOverrides>
