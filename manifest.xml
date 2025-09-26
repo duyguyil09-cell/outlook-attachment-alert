@@ -3,16 +3,17 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:type="MailApp">
   <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>1.0.0.34</Version>
-
+  <Version>1.0.0.35</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
   <DisplayName DefaultValue="Test (çok basit)"/>
-  <Description DefaultValue="Sadece yükleme testi için basit görev bölmesi."/>
-  
-  <IconUrl               DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+  <Description DefaultValue="Sadece yükleme doğrulaması için basit görev bölmesi."/>
+
+  <!-- İKONLAR: Gerçekten 32x32 ve 80x80 PNG olsun -->
+  <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
-  <SupportUrl            DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html?v=34"/>
+
+  <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
 
   <AppDomains>
     <AppDomain>duyguyil09-cell.github.io</AppDomain>
@@ -22,19 +23,22 @@
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <!-- En düşük gereksinim ve izin -->
   <Requirements>
-    <Sets><Set Name="Mailbox" MinVersion="1.1"/></Sets>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
   </Requirements>
+
   <Permissions>ReadItem</Permissions>
 
-  <!-- Klasik kural tabanlı görünüm (komut/ribbon yok) -->
+  <!-- Basit kurala bağlı görünüm -->
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
 
-  <!-- Admin Center'ın aradığı zorunlu SourceLocation -->
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html?v=34"/>
+    <!-- ZORUNLU: 32–450 arasında bir değer -->
+    <RequestedHeight>250</RequestedHeight>
+    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
   </DefaultSettings>
 </OfficeApp>
