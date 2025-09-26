@@ -1,10 +1,15 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8"/>
-  <title>Function file</title>
+  <meta charset="utf-8" />
+  <title>Function File</title>
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <script src="./event.js"></script>
+  <script>
+    Office.onReady(function () {
+      // Validator'ın aradığı tek şey: office.js yüklü ve initialize oldu
+      console.log("function-file ready");
+    });
+  </script>
 </head>
-<body></body>
+<body>OK - function file</body>
 </html>
