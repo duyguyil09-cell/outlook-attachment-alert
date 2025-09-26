@@ -1,107 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp
-  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xsi:type="MailApp">
+<FormSettings>
+  <Form xsi:type="ItemRead">
+    <DesktopSettings>
+      <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+      <RequestedHeight>300</RequestedHeight>
+    </DesktopSettings>
+  </Form>
+  <Form xsi:type="ItemEdit">
+    <DesktopSettings>
+      <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+      <RequestedHeight>300</RequestedHeight>
+    </DesktopSettings>
+  </Form>
+</FormSettings>
 
-  <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>3.0.0.0</Version>
-  <ProviderName>Trendyol</ProviderName>
-  <DefaultLocale>tr-TR</DefaultLocale>
-  <DisplayName DefaultValue="Trendyol ToolPane"/>
-  <Description DefaultValue="Toolbar butonuyla sağ paneli açar."/>
-
-  <!-- İkonlar -->
-  <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
-  <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
-
-  <!-- Güvenilen alan -->
-  <AppDomains>
-    <AppDomain>duyguyil09-cell.github.io</AppDomain>
-  </AppDomains>
-
-  <!-- Konak -->
-  <Hosts>
-    <Host Name="Mailbox"/>
-  </Hosts>
-
-  <!-- Gereksinimler -->
-  <Requirements>
-    <!-- Komut yüzeyi için 1.3 yeterli -->
-    <Sets>
-      <Set Name="Mailbox" MinVersion="1.3"/>
-    </Sets>
-  </Requirements>
-
-  <!-- İzinler -->
-  <Permissions>ReadItem</Permissions>
-
-  <!-- ===== Komut yüzeyi (toolbar butonu) — 1.1 NS, MailHost + DesktopFormFactor ===== -->
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
-    <Requirements>
-      <Sets DefaultMinVersion="1.3">
-        <Set Name="Mailbox"/>
-      </Sets>
-    </Requirements>
-
-    <Hosts>
-      <Host xsi:type="MailHost">
-        <DesktopFormFactor>
-          <!-- OKUMA ekranı butonu -->
-          <ExtensionPoint xsi:type="MessageReadCommandSurface">
-            <OfficeTab id="TabDefault">
-              <Group id="grpRead" label="Trendyol">
-                <Control id="btnOpenPaneRead" type="Button" label="Paneli Aç" icon="residIcon32">
-                  <Action xsi:type="ShowTaskpane">
-                    <SourceLocation resid="residPaneUrl"/>
-                  </Action>
-                </Control>
-              </Group>
-            </OfficeTab>
-          </ExtensionPoint>
-
-          <!-- YAZMA ekranı butonu -->
-          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
-            <OfficeTab id="TabDefault">
-              <Group id="grpCompose" label="Trendyol">
-                <Control id="btnOpenPaneCompose" type="Button" label="Paneli Aç" icon="residIcon32">
-                  <Action xsi:type="ShowTaskpane">
-                    <SourceLocation resid="residPaneUrl"/>
-                  </Action>
-                </Control>
-              </Group>
-            </OfficeTab>
-          </ExtensionPoint>
-
-          <!-- Zorunlu: FunctionFile -->
-          <FunctionFile resid="residFunctionFileUrl"/>
-        </DesktopFormFactor>
-      </Host>
-    </Hosts>
-
-    <!-- Kaynaklar -->
-    <Resources>
-      <bt:Images>
-        <bt:Image id="residIcon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
-      </bt:Images>
-
-      <bt:Urls>
-        <!-- Panelde gösterilecek sayfa: mevcut home.html -->
-        <bt:Url id="residPaneUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
-        <!-- Function file: office.js + (gerekirse) boş bir script -->
-        <bt:Url id="residFunctionFileUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
-      </bt:Urls>
-
-      <bt:ShortStrings>
-        <bt:String id="residShort" DefaultValue="Trendyol"/>
-      </bt:ShortStrings>
-      <bt:LongStrings>
-        <bt:String id="residLong" DefaultValue="Trendyol Panelini Aç"/>
-      </bt:LongStrings>
-    </Resources>
-
-    <VersionOverrides/>
-  </VersionOverrides>
-</OfficeApp>
+<Rule xsi:type="RuleCollection" Mode="Or">
+  <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+</Rule>
