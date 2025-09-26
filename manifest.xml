@@ -1,19 +1,99 @@
-<FormSettings>
-  <Form xsi:type="ItemRead">
-    <DesktopSettings>
-      <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
-      <RequestedHeight>300</RequestedHeight>
-    </DesktopSettings>
-  </Form>
-  <Form xsi:type="ItemEdit">
-    <DesktopSettings>
-      <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
-      <RequestedHeight>300</RequestedHeight>
-    </DesktopSettings>
-  </Form>
-</FormSettings>
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+           xsi:type="MailApp">
+  <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
+  <Version>1.1.0.0</Version>
+  <ProviderName>Trendyol</ProviderName>
+  <DefaultLocale>tr-TR</DefaultLocale>
+  <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
+  <Description DefaultValue="Gönder tuşunda ek varsa kullanıcıyı uyarır."/>
 
-<Rule xsi:type="RuleCollection" Mode="Or">
-  <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
-  <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
-</Rule>
+  <!-- İkonlar -->
+  <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+  <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+
+  <AppDomains>
+    <AppDomain>duyguyil09-cell.github.io</AppDomain>
+  </AppDomains>
+
+  <Hosts><Host Name="Mailbox"/></Hosts>
+
+  <!-- 1) Requirements -->
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+
+  <!-- 2) FormSettings (pane) -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+        <RequestedHeight>300</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <!-- 3) Permissions -->
+  <Permissions>ReadWriteItem</Permissions>
+
+  <!-- 4) Rule -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+
+  <!-- 5) OnSend: VersionOverrides 1.1 -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
+    <Requirements>
+      <Sets DefaultMinVersion="1.8">
+        <Set Name="Mailbox"/>
+      </Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host Name="Mailbox">
+        <Runtimes>
+          <!-- function file’ı runtime olarak tanımla -->
+          <Runtime resid="residRuntime" Lifetime="long"/>
+        </Runtimes>
+
+        <ExtensionPoint xsi:type="LaunchEvent">
+          <LaunchEvents>
+            <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
+          </LaunchEvents>
+          <!-- runtime kaynağı -->
+          <SourceLocation resid="residRuntime"/>
+          <!-- tüm iletilerde çalışsın -->
+          <Rule xsi:type="RuleCollection" Mode="Or">
+            <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+            <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+          </Rule>
+        </ExtensionPoint>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="residIcon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+        <bt:Image id="residIcon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="residRuntime" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
+        <bt:Url id="residSupportUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="residDisplayName" DefaultValue="Ek Uyarısı"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="residDescription" DefaultValue="Gönderirken ekte dosya varsa uyarır."/>
+      </bt:LongStrings>
+    </Resources>
+
+    <VersionOverrides/>
+  </VersionOverrides>
+</OfficeApp>
