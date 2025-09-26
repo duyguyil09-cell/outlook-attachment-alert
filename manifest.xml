@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-           xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
            xsi:type="MailApp">
-  <!-- Her denemede GUID ve Version'ı değiştir -->
-  <Id>8E9F0E6E-3C2E-4D45-9E1C-6D8C3D2B9F31</Id>
-  <Version>1.0.0.31</Version>
+  <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
+  <Version>1.0.0.34</Version>
 
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
-  <DisplayName DefaultValue="Test Pane (Basit)"/>
-  <Description DefaultValue="Yükleme testi için en sade görev bölmesi."/>
+  <DisplayName DefaultValue="Test (çok basit)"/>
+  <Description DefaultValue="Sadece yükleme testi için basit görev bölmesi."/>
   
-  <!-- İkonlar -->
   <IconUrl               DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
-  <SupportUrl            DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=31"/>
-
-  <!-- Admin Center mutlaka görmek istiyor -->
-  <DefaultSettings>
-    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=31"/>
-  </DefaultSettings>
+  <SupportUrl            DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html?v=34"/>
 
   <AppDomains>
     <AppDomain>duyguyil09-cell.github.io</AppDomain>
@@ -31,74 +22,19 @@
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <!-- Minimum izin -->
+  <!-- En düşük gereksinim ve izin -->
+  <Requirements>
+    <Sets><Set Name="Mailbox" MinVersion="1.1"/></Sets>
+  </Requirements>
   <Permissions>ReadItem</Permissions>
 
-  <!-- Komutlu UI için 1.3 yeterli -->
-  <Requirements>
-    <Sets>
-      <Set Name="Mailbox" MinVersion="1.3"/>
-    </Sets>
-  </Requirements>
+  <!-- Klasik kural tabanlı görünüm (komut/ribbon yok) -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
 
-  <ov:VersionOverrides xsi:type="ov:VersionOverridesV1_1" Version="1.0">
-    <ov:Requirements>
-      <bt:Sets DefaultMinVersion="1.3">
-        <bt:Set Name="Mailbox"/>
-      </bt:Sets>
-    </ov:Requirements>
-
-    <ov:Hosts>
-      <ov:Host xsi:type="ov:MailHost">
-        <ov:DesktopFormFactor>
-          <ov:FunctionFile resid="FF.Url"/>
-          <ov:ExtensionPoints>
-            <ov:MessageReadCommandSurface>
-              <ov:OfficeTab id="TabDefault">
-                <ov:Group id="grp1">
-                  <ov:Label resid="groupLabel"/>
-                  <ov:Control xsi:type="ov:Button" id="btnOpenPane">
-                    <ov:Label resid="btnLabel"/>
-                    <ov:Supertip>
-                      <ov:Title resid="tipTitle"/>
-                      <ov:Description resid="tipDesc"/>
-                    </ov:Supertip>
-                    <ov:Icon>
-                      <bt:Image resid="icon16" size="16"/>
-                      <bt:Image resid="icon32" size="32"/>
-                      <bt:Image resid="icon80" size="80"/>
-                    </ov:Icon>
-                    <ov:Action xsi:type="ov:ShowTaskpane">
-                      <ov:TaskpaneId>TP1</ov:TaskpaneId>
-                      <ov:SourceLocation resid="Taskpane.Url"/>
-                    </ov:Action>
-                  </ov:Control>
-                </ov:Group>
-              </ov:OfficeTab>
-            </ov:MessageReadCommandSurface>
-          </ov:ExtensionPoints>
-        </ov:DesktopFormFactor>
-      </ov:Host>
-    </ov:Hosts>
-
-    <ov:Resources>
-      <bt:Images>
-        <bt:Image id="icon16" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
-        <bt:Image id="icon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
-        <bt:Image id="icon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
-      </bt:Images>
-      <bt:Urls>
-        <bt:Url id="FF.Url"       DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html?v=31"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html?v=31"/>
-      </bt:Urls>
-      <bt:ShortStrings>
-        <bt:String id="groupLabel" DefaultValue="Test"/>
-        <bt:String id="btnLabel"   DefaultValue="Aç"/>
-        <bt:String id="tipTitle"   DefaultValue="Test Pane"/>
-      </bt:ShortStrings>
-      <bt:LongStrings>
-        <bt:String id="tipDesc" DefaultValue="Yükleme testi için görev bölmesi."/>
-      </bt:LongStrings>
-    </ov:Resources>
-  </ov:VersionOverrides>
+  <!-- Admin Center'ın aradığı zorunlu SourceLocation -->
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html?v=34"/>
+  </DefaultSettings>
 </OfficeApp>
