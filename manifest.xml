@@ -6,13 +6,12 @@
   xsi:type="MailApp">
 
   <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>2.0.0.6</Version>
+  <Version>2.0.0.7</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
   <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
   <Description DefaultValue="Gönder tuşuna basıldığında ekte dosya varsa uyarır."/>
 
-  <!-- ikonlar -->
   <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
   <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
@@ -21,19 +20,39 @@
     <AppDomain>duyguyil09-cell.github.io</AppDomain>
   </AppDomains>
 
-  <Hosts><Host Name="Mailbox"/></Hosts>
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
 
-  <!-- Temel gereksinim -->
+  <!-- 1) Requirements -->
   <Requirements>
     <Sets>
       <Set Name="Mailbox" MinVersion="1.1"/>
     </Sets>
   </Requirements>
 
-  <!-- İZİN -->
+  <!-- 2) FormSettings (validator bunu Permissions'tan ÖNCE istiyor) -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+        <RequestedHeight>300</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <!-- 3) Permissions -->
   <Permissions>ReadItem</Permissions>
 
-  <!-- === ON SEND (VersionOverrides 1.1) — DİKKAT: xsi:type YOK === -->
+  <!-- 4) (Pane görünümü için basit kural) -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+
+  <!-- 5) İsteğe bağlı ama şema açısından problemsiz -->
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <!-- 6) ON SEND (VersionOverrides 1.1; xsi:type YOK) -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
     <Requirements>
       <Sets DefaultMinVersion="1.8">
