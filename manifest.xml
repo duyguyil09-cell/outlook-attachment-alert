@@ -6,7 +6,7 @@
   xsi:type="MailApp">
 
   <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>2.0.0.7</Version>
+  <Version>2.0.0.8</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
   <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
@@ -20,9 +20,7 @@
     <AppDomain>duyguyil09-cell.github.io</AppDomain>
   </AppDomains>
 
-  <Hosts>
-    <Host Name="Mailbox"/>
-  </Hosts>
+  <Hosts><Host Name="Mailbox"/></Hosts>
 
   <!-- 1) Requirements -->
   <Requirements>
@@ -31,7 +29,7 @@
     </Sets>
   </Requirements>
 
-  <!-- 2) FormSettings (validator bunu Permissions'tan ÖNCE istiyor) -->
+  <!-- 2) FormSettings (Permissions'tan ÖNCE) -->
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
@@ -44,16 +42,16 @@
   <!-- 3) Permissions -->
   <Permissions>ReadItem</Permissions>
 
-  <!-- 4) (Pane görünümü için basit kural) -->
+  <!-- 4) (Pane için basit kural) -->
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
 
-  <!-- 5) İsteğe bağlı ama şema açısından problemsiz -->
+  <!-- 5) İsteğe bağlı -->
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
-  <!-- 6) ON SEND (VersionOverrides 1.1; xsi:type YOK) -->
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
+  <!-- 6) ON SEND — DİKKAT: /1.1 YOK, xsi:type YOK -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" Version="1.0.0">
     <Requirements>
       <Sets DefaultMinVersion="1.8">
         <Set Name="Mailbox"/>
@@ -71,6 +69,7 @@
             <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
           </LaunchEvents>
           <SourceLocation resid="residRuntime"/>
+          <!-- İstersen kapsam daraltmak için Rule koyabilirsin -->
         </ExtensionPoint>
       </Host>
     </Hosts>
