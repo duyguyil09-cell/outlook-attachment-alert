@@ -3,11 +3,11 @@
   xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xmlns:or="http://schemas.microsoft.com/office/mailappversionoverrides"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides"
   xsi:type="MailApp">
 
   <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>2.0.0.3</Version>
+  <Version>2.0.0.4</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
   <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
@@ -23,14 +23,14 @@
 
   <Hosts><Host Name="Mailbox"/></Hosts>
 
-  <!-- Requirements -->
+  <!-- 1) Requirements -->
   <Requirements>
     <Sets>
       <Set Name="Mailbox" MinVersion="1.1"/>
     </Sets>
   </Requirements>
 
-  <!-- (İsteğe bağlı) Pane -->
+  <!-- 2) Pane (opsiyonel ama yükleyici bazen ister) -->
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
@@ -40,49 +40,50 @@
     </Form>
   </FormSettings>
 
-  <!-- Permissions -->
+  <!-- 3) Permissions -->
   <Permissions>ReadItem</Permissions>
 
-  <!-- Rule (pane için) -->
+  <!-- 4) Rule (pane için) -->
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
 
-  <!-- Şema tatmini -->
+  <!-- 5) Şema tatmini -->
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
-  <!-- === ON SEND (VersionOverrides v1.1) === -->
-  <or:VersionOverrides xsi:type="or:VersionOverridesV1_1" Version="1.0.0">
-    <or:Requirements>
-      <or:Sets DefaultMinVersion="1.8">
-        <or:Set Name="Mailbox"/>
-      </or:Sets>
-    </or:Requirements>
+  <!-- 6) ON SEND (VersionOverrides v1.1) -->
+  <mailappor:VersionOverrides xsi:type="VersionOverridesV1_1" Version="1.0.0">
+    <Requirements>
+      <Sets DefaultMinVersion="1.8">
+        <Set Name="Mailbox"/>
+      </Sets>
+    </Requirements>
 
-    <or:Hosts>
-      <or:Host Name="Mailbox">
-        <or:Runtimes>
-          <or:Runtime resid="residRuntime" Lifetime="long"/>
-        </or:Runtimes>
+    <Hosts>
+      <Host Name="Mailbox">
+        <Runtimes>
+          <Runtime resid="residRuntime" Lifetime="long"/>
+        </Runtimes>
 
-        <or:ExtensionPoint xsi:type="LaunchEvent">
-          <or:LaunchEvents>
-            <or:LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
-          </or:LaunchEvents>
-          <or:SourceLocation resid="residRuntime"/>
-          <or:Rule xsi:type="RuleCollection" Mode="Or">
+        <ExtensionPoint xsi:type="LaunchEvent">
+          <LaunchEvents>
+            <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
+          </LaunchEvents>
+          <SourceLocation resid="residRuntime"/>
+          <Rule xsi:type="RuleCollection" Mode="Or">
             <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
             <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
-          </or:Rule>
-        </or:ExtensionPoint>
-      </or:Host>
-    </or:Hosts>
+          </Rule>
+        </ExtensionPoint>
+      </Host>
+    </Hosts>
 
-    <or:Resources>
+    <Resources>
       <bt:Images>
         <bt:Image id="residIcon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
       </bt:Images>
       <bt:Urls>
+        <!-- function-file: office.js + event.js yüklüyor -->
         <bt:Url id="residRuntime" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
       </bt:Urls>
       <bt:ShortStrings>
@@ -91,8 +92,8 @@
       <bt:LongStrings>
         <bt:String id="residDesc" DefaultValue="Gönderirken ekte dosya varsa uyarır."/>
       </bt:LongStrings>
-    </or:Resources>
+    </Resources>
 
-    <or:VersionOverrides/>
-  </or:VersionOverrides>
+    <VersionOverrides/>
+  </mailappor:VersionOverrides>
 </OfficeApp>
