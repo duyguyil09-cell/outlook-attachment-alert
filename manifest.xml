@@ -50,7 +50,7 @@
   <!-- 5) İsteğe bağlı -->
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
-    <!-- 6) ON SEND — or: prefix, Host concrete type (NO Name attr), bt:Sets -->
+   <!-- 6) ON SEND — doğru şema: DesktopFormFactor altında Runtimes + LaunchEvent -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides">
     <Requirements>
       <bt:Sets DefaultMinVersion="1.8">
@@ -58,20 +58,21 @@
       </bt:Sets>
     </Requirements>
 
-    <Hosts xmlns:or="http://schemas.microsoft.com/office/mailappversionoverrides">
-      <!-- DİKKAT: Artık Name yok; somut tür: MailHost -->
-      <or:Host xsi:type="MailHost">
-        <or:Runtimes>
-          <or:Runtime resid="residRuntime" Lifetime="long"/>
-        </or:Runtimes>
+    <Hosts>
+      <Host>
+        <DesktopFormFactor>
+          <Runtimes>
+            <Runtime resid="residRuntime" Lifetime="long"/>
+          </Runtimes>
 
-        <or:ExtensionPoint xsi:type="LaunchEvent">
-          <or:LaunchEvents>
-            <or:LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
-          </or:LaunchEvents>
-          <or:SourceLocation resid="residRuntime"/>
-        </or:ExtensionPoint>
-      </or:Host>
+          <ExtensionPoint xsi:type="LaunchEvent">
+            <LaunchEvents>
+              <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
+            </LaunchEvents>
+            <SourceLocation resid="residRuntime"/>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
     </Hosts>
 
     <Resources>
@@ -82,7 +83,6 @@
 
     <VersionOverrides/>
   </VersionOverrides>
-
 
 
 </OfficeApp>
