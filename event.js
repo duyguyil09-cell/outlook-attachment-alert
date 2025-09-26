@@ -1,6 +1,4 @@
 (function () {
-  Office.actions.associate("onMessageSendHandler", onMessageSendHandler);
-
   function onMessageSendHandler(event) {
     try {
       const item = Office.context.mailbox.item;
@@ -9,14 +7,12 @@
           return event.completed({ allowEvent: true });
         }
         const list = Array.isArray(res.value) ? res.value : [];
-        const hasRealAttachments = list.some(a => a && a.isInline === false);
-        if (hasRealAttachments) {
+        const hasReal = list.some(a => a && a.isInline === false);
+        if (hasReal) {
           return event.completed({
             allowEvent: false,
-            errorMessage:
-              "Dikkat: Bu e-postada ek(ler) var. Yine de göndermek istiyor musunuz?",
-            errorMessageMarkdown:
-              "**Dikkat:** Bu e-postada **ek(ler)** var.\n\nGöndermek istiyor musunuz?"
+            errorMessage: "Dikkat: Bu e-postada ek(ler) var. Göndermek istiyor musunuz?",
+            errorMessageMarkdown: "**Dikkat:** Bu e-postada **ek(ler)** var.\n\nGöndermek istiyor musunuz?"
           });
         }
         event.completed({ allowEvent: true });
@@ -25,4 +21,5 @@
       event.completed({ allowEvent: true });
     }
   }
+  Office.actions.associate("onMessageSendHandler", onMessageSendHandler);
 })();
