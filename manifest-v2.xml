@@ -5,15 +5,21 @@
            xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
            xsi:type="MailApp">
 
-  <!-- YENİ GUID (bu app'e özgü) -->
-  <Id>9E3A7A1B-5D45-4E1F-9C9E-5F3C9C2D8B11</Id>
+  <!-- YENİ GUID -->
+  <Id>3B8D2B5C-4C9E-4E42-8B3D-0C9B4D5E7A31</Id>
 
   <Version>1.0.0.0</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
-  <DisplayName DefaultValue="Compose Pane (v2)"/>
+  <DisplayName DefaultValue="Compose Pane (Pinned)"/>
   <Description DefaultValue="Yeni e-posta yazarken görev bölmesini açar."/>
 
+  <!-- Toolbar/Store doğrulamalarının sevdiği kök SourceLocation -->
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+  </DefaultSettings>
+
+  <!-- İkonlar -->
   <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
 
@@ -31,12 +37,12 @@
 
   <Permissions>ReadWriteItem</Permissions>
 
+  <!-- Add-in Command (compose butonu) -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
     <Hosts>
       <Host xsi:type="MailHost">
         <DesktopFormFactor>
           <FunctionFile resid="residFunctionFileUrl"/>
-
           <ExtensionPoint xsi:type="MessageComposeCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="grpComposePane">
@@ -68,7 +74,6 @@
               </Group>
             </OfficeTab>
           </ExtensionPoint>
-
         </DesktopFormFactor>
       </Host>
     </Hosts>
