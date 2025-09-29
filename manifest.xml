@@ -4,16 +4,17 @@
            xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
            xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
            xsi:type="MailApp">
-  <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>1.1.0.0</Version>
+
+  <Id>F6E3D6C9-3C8D-4D68-9F2C-3F7E2B9B00A3</Id>
+  <Version>1.0.0.1</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
-  <DisplayName DefaultValue="Ek Uyarısı (Gönderirken)"/>
-  <Description DefaultValue="Gönder tuşunda ek varsa kullanıcıyı uyarır."/>
+  <DisplayName DefaultValue="Compose Pane"/>
+  <Description DefaultValue="Yeni e-posta yazarken görev bölmesini açar."/>
 
-  <!-- İkonlar -->
   <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+
   <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
 
   <AppDomains>
@@ -22,75 +23,75 @@
 
   <Hosts><Host Name="Mailbox"/></Hosts>
 
-  <!-- 1) Requirements -->
   <Requirements>
-    <Sets>
-      <Set Name="Mailbox" MinVersion="1.1"/>
-    </Sets>
+    <Sets><Set Name="Mailbox" MinVersion="1.3"/></Sets>
   </Requirements>
 
-  <!-- 2) FormSettings (pane) -->
-  <FormSettings>
-    <Form xsi:type="ItemRead">
-      <DesktopSettings>
-        <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
-        <RequestedHeight>300</RequestedHeight>
-      </DesktopSettings>
-    </Form>
-  </FormSettings>
-
-  <!-- 3) Permissions -->
   <Permissions>ReadWriteItem</Permissions>
 
-  <!-- 4) Rule -->
-  <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
-  </Rule>
-
-  <!-- 5) OnSend: VersionOverrides 1.1 -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
-    <Requirements>
-      <Sets DefaultMinVersion="1.8">
-        <Set Name="Mailbox"/>
-      </Sets>
-    </Requirements>
-
     <Hosts>
-      <Host Name="Mailbox">
-        <Runtimes>
-          <!-- function file’ı runtime olarak tanımla -->
-          <Runtime resid="residRuntime" Lifetime="long"/>
-        </Runtimes>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <FunctionFile resid="residFunctionFileUrl"/>
 
-        <ExtensionPoint xsi:type="LaunchEvent">
-          <LaunchEvents>
-            <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
-          </LaunchEvents>
-          <!-- runtime kaynağı -->
-          <SourceLocation resid="residRuntime"/>
-          <!-- tüm iletilerde çalışsın -->
-          <Rule xsi:type="RuleCollection" Mode="Or">
-            <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
-            <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
-          </Rule>
-        </ExtensionPoint>
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="grpComposePane">
+                <Label resid="grpLabel"/>
+                <Icon>
+                  <bt:Image resid="icon16"/>
+                  <bt:Image resid="icon32"/>
+                  <bt:Image resid="icon80"/>
+                </Icon>
+
+                <Control xsi:type="Button" id="btnOpenComposePane">
+                  <Label resid="btnOpenLabel"/>
+                  <Supertip>
+                    <Title resid="btnOpenTitle"/>
+                    <Description resid="btnOpenDesc"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image resid="icon16"/>
+                    <bt:Image resid="icon32"/>
+                    <bt:Image resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>composePane</TaskpaneId>
+                    <SourceLocation resid="residTaskpaneUrl"/>
+                    <!-- önemli: barda sabitlemeyi açar -->
+                    <SupportsPinning>true</SupportsPinning>
+                  </Action>
+                </Control>
+
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
+        </DesktopFormFactor>
       </Host>
     </Hosts>
 
     <Resources>
       <bt:Images>
-        <bt:Image id="residIcon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
-        <bt:Image id="residIcon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+        <bt:Image id="icon16" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+        <bt:Image id="icon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+        <bt:Image id="icon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
       </bt:Images>
+
       <bt:Urls>
-        <bt:Url id="residRuntime" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
-        <bt:Url id="residSupportUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+        <bt:Url id="residTaskpaneUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+        <bt:Url id="residFunctionFileUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
       </bt:Urls>
+
       <bt:ShortStrings>
-        <bt:String id="residDisplayName" DefaultValue="Ek Uyarısı"/>
+        <bt:String id="grpLabel" DefaultValue="Compose Pane"/>
+        <bt:String id="btnOpenLabel" DefaultValue="Open pane"/>
+        <bt:String id="btnOpenTitle" DefaultValue="Compose Pane"/>
       </bt:ShortStrings>
+
       <bt:LongStrings>
-        <bt:String id="residDescription" DefaultValue="Gönderirken ekte dosya varsa uyarır."/>
+        <bt:String id="btnOpenDesc" DefaultValue="Sağdaki görev bölmesini açar."/>
       </bt:LongStrings>
     </Resources>
 
