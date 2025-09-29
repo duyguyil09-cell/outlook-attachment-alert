@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+           xsi:type="MailApp">
+
+  <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
+  <Version>1.0.3.3</Version>
+  <ProviderName>Trendyol</ProviderName>
+  <DefaultLocale>tr-TR</DefaultLocale>
+  <DisplayName DefaultValue="Test (Pane)"/>
+  <Description DefaultValue="Yükleme testi için en basit görev bölmesi."/>
+
+  <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+  <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+
+  <AppDomains>
+    <AppDomain>duyguyil09-cell.github.io</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+
+  <Permissions>ReadItem</Permissions>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.5">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="grpTestPane">
+                <Label resid="grpLabel"/>
+                <Icon>
+                  <bt:Image resid="icon32"/>
+                  <bt:Image resid="icon80"/>
+                </Icon>
+
+                <Control xsi:type="Button" id="btnOpenPane">
+                  <Label resid="btnOpenLabel"/>
+                  <Supertip>
+                    <Title resid="btnOpenTitle"/>
+                    <Description resid="btnOpenDesc"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image resid="icon32"/>
+                    <bt:Image resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>readPane</TaskpaneId>
+                    <SourceLocation resid="residTaskpaneUrl"/>
+                  </Action>
+                </Control>
+
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+        <bt:Image id="icon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+      </bt:Images>
+
+      <bt:Urls>
+        <bt:Url id="residTaskpaneUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+      </bt:Urls>
+
+      <bt:ShortStrings>
+        <bt:String id="grpLabel" DefaultValue="Test (Pane)"/>
+        <bt:String id="btnOpenLabel" DefaultValue="Open"/>
+        <bt:String id="btnOpenTitle" DefaultValue="Test (Pane)"/>
+      </bt:ShortStrings>
+
+      <bt:LongStrings>
+        <bt:String id="btnOpenDesc" DefaultValue="Sağda görev bölmesini açar."/>
+      </bt:LongStrings>
+    </Resources>
+
+    <VersionOverrides/>
+  </VersionOverrides>
+</OfficeApp>
