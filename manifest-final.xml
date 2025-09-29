@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+           xsi:type="MailApp">
+
+  <!-- YENİ VE EŞSİZ GUID -->
+  <Id>5E2A6E60-8F8F-4B57-9D8A-1E7F0FA6E3C2</Id>
+
+  <Version>1.0.0.9</Version>
+  <ProviderName>Trendyol</ProviderName>
+  <DefaultLocale>tr-TR</DefaultLocale>
+  <DisplayName DefaultValue="Compose Pane (Final)"/>
+  <Description DefaultValue="Okuma görünümünde basit panel; compose ekranında Apps menüsünde pinlenebilir görev bölmesi."/>
+
+  <!-- Üst seviye ikon/sayfa -->
+  <IconUrl DefaultValue="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/png/outlook_32x1.png"/>
+  <HighResolutionIconUrl DefaultValue="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/png/outlook_64x1.png"/>
+  <SupportUrl DefaultValue="https://outlook-attachment-alert.pages.dev/home"/>
+
+  <AppDomains>
+    <AppDomain>outlook-attachment-alert.pages.dev</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <!-- Add-in Commands için güvenli sürüm -->
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.5"/>
+    </Sets>
+  </Requirements>
+
+  <!-- === KÖK: klasik bölüm (validator mutlu) === -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://outlook-attachment-alert.pages.dev/home"/>
+        <RequestedHeight>300</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadItem</Permissions>
+
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+
+  <!-- === Modern Add-in Commands (Compose) === -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+
+          <!-- FunctionFile önce ve AYRI -->
+          <FunctionFile resid="residFunction"/>
+
+          <!-- Compose command surface -->
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <Rule xsi:type="RuleCollection" Mode="Or">
+              <Rule xsi:type="ItemIs" ItemType="Message" FormType="Compose"/>
+            </Rule>
+
+            <OfficeTab id="TabDefault">
+              <Group id="grpCompose">
+                <Label resid="grpLabel"/>
+                <Icon>
+                  <bt:Image resid="icon32"/>
+                  <bt:Image resid="icon80"/>
+                </Icon>
+
+                <Control xsi:type="Button" id="btnOpenPane">
+                  <Label resid="btnLabel"/>
+                  <Supertip>
+                    <Title resid="btnTitle"/>
+                    <Description resid="btnDesc"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image resid="icon32"/>
+                    <bt:Image resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>composePane</TaskpaneId>
+                    <SourceLocation resid="residTaskpane"/>
+                    <SupportsPinning>true</SupportsPinning>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon32" DefaultValue="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/png/outlook_32x1.png"/>
+        <bt:Image id="icon80" DefaultValue="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/png/outlook_64x1.png"/>
+      </bt:Images>
+
+      <bt:Urls>
+        <bt:Url id="residFunction" DefaultValue="https://outlook-attachment-alert.pages.dev/function-file"/>
+        <bt:Url id="residTaskpane" DefaultValue="https://outlook-attachment-alert.pages.dev/home"/>
+      </bt:Urls>
+
+      <bt:ShortStrings>
+        <bt:String id="grpLabel" DefaultValue="Compose Pane"/>
+        <bt:String id="btnLabel" DefaultValue="Open pane"/>
+        <bt:String id="btnTitle" DefaultValue="Compose Pane"/>
+      </bt:ShortStrings>
+
+      <bt:LongStrings>
+        <bt:String id="btnDesc" DefaultValue="Sağdaki görev bölmesini açar."/>
+      </bt:LongStrings>
+    </Resources>
+
+    <VersionOverrides/>
+  </VersionOverrides>
+</OfficeApp>
