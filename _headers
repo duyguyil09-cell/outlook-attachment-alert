@@ -1,3 +1,11 @@
 /*
   X-Frame-Options:
-  Content-Security-Policy: frame-ancestors https://*.office.com https://*.officeapps.live.com https://outlook.office.com https://outlook.office365.com;
+  Content-Security-Policy: frame-ancestors
+    https://*.office.com
+    https://*.officeapps.live.com
+    https://outlook.office.com
+    https://outlook.office365.com
+    https://*.microsoftonline.com
+    https://login.microsoftonline.com
+    https://*.microsoft.com
+    https://outlook-sdf.office.com;
