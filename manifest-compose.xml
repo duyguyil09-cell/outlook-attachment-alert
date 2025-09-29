@@ -2,87 +2,124 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-           xmlns:ov="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
            xsi:type="MailApp">
-  <Id>F6E3D6C9-3C8D-4D68-9F2C-3F7E2B9B00A3</Id>
-  <Version>1.0.0.0</Version>
+
+  <!-- Add-in kimliği aynı kalabilir; UI'den UPDATE yapmak istiyorsan Id ayni olmalı -->
+  <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
+  <Version>2.1.0.0</Version>
   <ProviderName>Trendyol</ProviderName>
   <DefaultLocale>tr-TR</DefaultLocale>
-  <DisplayName DefaultValue="Compose Pane"/>
-  <Description DefaultValue="Yeni e-posta yazarken görev bölmesini açar."/>
+  <DisplayName DefaultValue="Attachment Guard"/>
+  <Description DefaultValue="Compose ekranında buton; göndermede (OnMessageSend) kontrol." />
 
+  <!-- İkonlar -->
   <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
   <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
 
+  <!-- Dış URL alanları -->
   <AppDomains>
     <AppDomain>duyguyil09-cell.github.io</AppDomain>
   </AppDomains>
 
-  <Hosts><Host Name="Mailbox"/></Hosts>
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
 
+  <!-- Compose tarafında alıcı/konu/eklere erişmek için ReadWriteItem gerekir -->
   <Requirements>
     <Sets>
-      <Set Name="Mailbox" MinVersion="1.3"/>
+      <Set Name="Mailbox" MinVersion="1.8"/>
     </Sets>
   </Requirements>
 
+  <!-- (İsteğe bağlı) okuma görünümünde sağ panel açmak istersen -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+        <RequestedHeight>300</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
   <Permissions>ReadWriteItem</Permissions>
 
+  <!-- Add-in Commands + Event-based add-in -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0.0">
+
     <Hosts>
       <Host xsi:type="MailHost">
-        <DesktopFormFactor>
+        <!-- EVENT TABANLI KISIM: OnMessageSend için çalışma ortamı -->
+        <Runtimes>
+          <!-- function-file.html'i event runtime olarak kullan -->
+          <Runtime resid="residFunctionFileUrl" Lifetime="long"/>
+        </Runtimes>
 
+        <!-- GÖNDERMEDE ÇALIŞSIN -->
+        <ExtensionPoint xsi:type="LaunchEvent">
+          <LaunchEvents>
+            <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler"/>
+          </LaunchEvents>
+          <!-- Event kodunun bulunduğu sayfa -->
+          <SourceLocation resid="residFunctionFileUrl"/>
+        </ExtensionPoint>
+
+        <!-- ÜST BAR BUTONU (Compose) -->
+        <DesktopFormFactor>
           <FunctionFile resid="residFunctionFileUrl"/>
 
           <ExtensionPoint xsi:type="MessageComposeCommandSurface">
             <OfficeTab id="TabDefault">
-              <Group id="grpComposePane">
-                <Label resid="grpLabel"/>
+              <Group id="grpAttachGuard">
+                <Label resid="residGroupLabel"/>
                 <Icon>
-                  <bt:Image resid="icon32"/>
-                  <bt:Image resid="icon80"/>
+                  <bt:Image resid="residIcon32"/>
+                  <bt:Image resid="residIcon80"/>
                 </Icon>
-                <Control xsi:type="Button" id="btnOpenComposePane">
-                  <Label resid="btnOpenLabel"/>
+
+                <Control xsi:type="Button" id="btnCheckAttachments">
+                  <Label resid="residBtnLabel"/>
                   <Supertip>
-                    <Title resid="btnOpenTitle"/>
-                    <Description resid="btnOpenDesc"/>
+                    <Title resid="residBtnTitle"/>
+                    <Description resid="residBtnDesc"/>
                   </Supertip>
                   <Icon>
-                    <bt:Image resid="icon32"/>
-                    <bt:Image resid="icon80"/>
+                    <bt:Image resid="residIcon32"/>
+                    <bt:Image resid="residIcon80"/>
                   </Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>composePane</TaskpaneId>
-                    <SourceLocation resid="residTaskpaneUrl"/>
+                  <!-- Buton basılınca JS fonksiyonun çalışır -->
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>runAttachmentCheck</FunctionName>
                   </Action>
                 </Control>
               </Group>
             </OfficeTab>
           </ExtensionPoint>
-
         </DesktopFormFactor>
       </Host>
     </Hosts>
 
+    <!-- Kaynaklar -->
     <Resources>
       <bt:Images>
-        <bt:Image id="icon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
-        <bt:Image id="icon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+        <bt:Image id="residIcon32" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
+        <bt:Image id="residIcon80" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
       </bt:Images>
+
       <bt:Urls>
-        <bt:Url id="residTaskpaneUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+        <!-- HEM buton hem OnMessageSend BURAYI yükler -->
         <bt:Url id="residFunctionFileUrl" DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/function-file.html"/>
       </bt:Urls>
+
       <bt:ShortStrings>
-        <bt:String id="grpLabel" DefaultValue="Compose Pane"/>
-        <bt:String id="btnOpenLabel" DefaultValue="Open pane"/>
-        <bt:String id="btnOpenTitle" DefaultValue="Compose Pane"/>
+        <bt:String id="residGroupLabel" DefaultValue="Attachment Guard"/>
+        <bt:String id="residBtnLabel"   DefaultValue="Check attachments"/>
+        <bt:String id="residBtnTitle"   DefaultValue="Check attachments"/>
       </bt:ShortStrings>
+
       <bt:LongStrings>
-        <bt:String id="btnOpenDesc" DefaultValue="Sağdaki görev bölmesini açar."/>
+        <bt:String id="residBtnDesc" DefaultValue="Ekte dosya var mı kontrol eder ve uyarı gösterir."/>
       </bt:LongStrings>
     </Resources>
 
