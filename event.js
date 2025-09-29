@@ -1,50 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:type="MailApp">
-  <Id>9F2E3A64-7E9D-4E34-9E9C-9B7A1A7E00A1</Id>
-  <Version>1.0.2.2</Version>
-  <ProviderName>Trendyol</ProviderName>
-  <DefaultLocale>tr-TR</DefaultLocale>
-  <DisplayName DefaultValue="Test (Pane)"/>
-  <Description DefaultValue="Yükleme testi için en basit görev bölmesi."/>
+(function () {
+  Office.onReady(() => {});
 
-  <!-- İKONLAR -->
-  <IconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/icon-80.png"/>
+  // Compose butonu
+  window.runAttachmentCheck = async (event) => {
+    try {
+      const item = Office.context.mailbox.item;
+      const res = await item.getAttachmentsAsync();
+      const list = Array.isArray(res.value) ? res.value : [];
+      const hasReal = list.some(a => a && a.isInline === false);
 
-  <SupportUrl DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
+      Office.context.ui.displayDialogAsync(
+        "about:blank",
+        { height: 30, width: 30, displayInIframe: true },
+        () => {}
+      );
 
-  <AppDomains>
-    <AppDomain>duyguyil09-cell.github.io</AppDomain>
-  </AppDomains>
+      console.log("Attachment check:", hasReal ? "VAR" : "YOK");
+    } finally {
+      event.completed();
+    }
+  };
 
-  <Hosts>
-    <Host Name="Mailbox"/>
-  </Hosts>
-
-  <!-- GEREKSİNİM -->
-  <Requirements>
-    <Sets>
-      <Set Name="Mailbox" MinVersion="1.1"/>
-    </Sets>
-  </Requirements>
-
-  <!-- FORM AYARLARI (pane) -->
-  <FormSettings>
-    <Form xsi:type="ItemRead">
-      <DesktopSettings>
-        <SourceLocation DefaultValue="https://duyguyil09-cell.github.io/outlook-attachment-alert/home.html"/>
-        <RequestedHeight>300</RequestedHeight>
-      </DesktopSettings>
-    </Form>
-  </FormSettings>
-
-  <!-- İZİN -->
-  <Permissions>ReadItem</Permissions>
-
-  <!-- KURAL -->
-  <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
-  </Rule>
-</OfficeApp>
+  // Gönderirken (OnMessageSend)
+  function onMessageSendHandler(event) {
+    try {
+      Office.context.mailbox.item.getAttachmentsAsync((res) => {
+        const hasReal = Array.isArray(res.value) && res.value.some(a => a && a.isInline === false);
+        if (hasReal) {
+          // UYARI verip gönderimi bir defa engelle
+          event.completed({
+            allowEvent: false,
+            errorMessage: "Bu e-postada ek var. Kontrol edip tekrar gönderin."
+          });
+        } else {
+          event.completed({ allowEvent: true });
+        }
+      });
+    } catch {
+      event.completed({ allowEvent: true });
+    }
+  }
+  Office.actions.associate("onMessageSendHandler", onMessageSendHandler);
+})();
